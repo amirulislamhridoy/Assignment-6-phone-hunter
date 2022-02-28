@@ -1,4 +1,7 @@
-// search button click
+// show and hide element tag
+const showHide = (id, style) => {
+    document.getElementById(id).style.display = style
+}
 const load = async () => {
     const inputField = document.getElementById('input-field')
     const inputText = inputField.value 
@@ -6,13 +9,24 @@ const load = async () => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${inputText}`
     const res = await fetch(url)
     const data = await res.json()
-    display(data.data)
+    if(data.data.length == 0){
+        // error.style.display = 'block'
+        // row2.style.display = 'none'
+        showHide('error', 'block')
+        showHide('row','none')
+    }
+    else{
+        display(data.data)
+    }
+    inputField.value = ''
 }
 // fist display
 const display = (phones) => {
     // console.log(phones)
+    showHide('error', 'none')
+    showHide('row','flex')
     document.getElementById('row').textContent = ''
-    if(phones.length > 5){
+    if(phones.length > 20){
         for(let i=0; i<20; i++){
             const phone = phones[i]
             createElement(phone)
@@ -20,8 +34,7 @@ const display = (phones) => {
     }
     else{
         for(let phone of phones){
-            // console.log(phone)
-            createElement()
+            createElement(phone)
         }
     }
 }
