@@ -26,12 +26,12 @@ const display = (phones) => {
 }
 
 const createElement = (phone) => {
-    console.log(phone)
+    // console.log(phone)
     const row = document.getElementById('row')
     const div = document.createElement('div')
     div.classList.add('col')
             div.innerHTML = `
-                <div onclick="" class="card rounded-3">
+                <div onclick="outputDetails('${phone.slug}')" class="card rounded-3">
                   <img src="${phone.image}" class="card-img-top p-5" alt="...">
                   <div class="card-body">
                     <h5 class="card-title">${phone.phone_name}</h5>
@@ -41,4 +41,12 @@ const createElement = (phone) => {
                 </div>
             `
             row.appendChild(div)
+}
+
+const outputDetails = (phoneId) => {
+    console.log(phoneId)
+    const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`
+    fetch(url)
+    .then(res => res.json())
+    .then(data => console.log(data.data))
 }
