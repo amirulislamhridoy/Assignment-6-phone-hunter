@@ -2,16 +2,17 @@
 const showHide = (id, style) => {
     document.getElementById(id).style.display = style
 }
+// take search text
 const load = async () => {
     const inputField = document.getElementById('input-field')
     const inputText = inputField.value 
+    showHide('spinner','block')
+    document.getElementById("spinner").style.margin = 'auto'
 
     const url = `https://openapi.programming-hero.com/api/phones?search=${inputText}`
     const res = await fetch(url)
     const data = await res.json()
     if(data.data.length == 0){
-        // error.style.display = 'block'
-        // row2.style.display = 'none'
         showHide('error', 'block')
         showHide('row','none')
     }
@@ -25,6 +26,7 @@ const display = (phones) => {
     // console.log(phones)
     showHide('error', 'none')
     showHide('row','flex')
+    showHide('spinner',"none")
     document.getElementById('row').textContent = ''
     if(phones.length > 20){
         for(let i=0; i<20; i++){
@@ -107,4 +109,41 @@ const outputDisplay = (phoneDetails) => {
       </div>
     </div>
     `
+}
+
+
+
+//show all btn
+const showAll = () => {
+    const inputField = document.getElementById('input-field')
+    const inputText = inputField.value
+    showHide('spinner','block')
+    document.getElementById("spinner").style.margin = 'auto'
+
+    const url = `https://openapi.programming-hero.com/api/phones?search=${inputText}`
+    fetch(url)
+    .then(res => res.json())
+    .then(data => {
+    if(data.data.length == 0){
+        showHide('error', 'block')
+        showHide('row','none')
+        showHide('spinner','block')
+    }
+    else{
+        showDisplay(data.data)
+    }
+    inputField.value = ''
+    // console.log(inputText)
+})
+}
+
+const showDisplay = (phones) => {
+    // console.log(phones)
+    showHide('error', 'none')
+    showHide('row','flex')
+    showHide('spinner','none')
+    document.getElementById('row').textContent = ''
+    for(let phone of phones){
+        createElement(phone)
+    }
 }
