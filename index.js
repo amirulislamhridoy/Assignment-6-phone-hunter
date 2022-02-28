@@ -59,7 +59,7 @@ const outputDisplay = (phoneDetails) => {
     output.innerHTML = `
     <div class="card w-50 mx-auto border-0" style="width: 18rem;">
       <img src="${phoneDetails.image}" class="card-img-top w-50 mx-auto" alt="...">
-      <div class="card-body d-flex gap-3">
+      <div class="card-body d-lg-flex gap-3 align-items-center">
         <div>
             <h4 class="card-title my-0">${phoneDetails.name}</h4>
             <h5 class="card-title my-0">${phoneDetails.releaseDate ? phoneDetails: 'No release date found'}</h5>
@@ -71,7 +71,7 @@ const outputDisplay = (phoneDetails) => {
             <h6 class="mt-2"></h6>
         </div>
 
-        <div class='text-end'>
+        <div class='text-lg-end'>
             <div>
             <span>${phoneDetails.mainFeatures.sensors[0] ? phoneDetails.mainFeatures.sensors[0]: ''},</span>
             <span>${phoneDetails.mainFeatures.sensors[1] ? phoneDetails.mainFeatures.sensors[1]: ''},</span>
@@ -83,12 +83,12 @@ const outputDisplay = (phoneDetails) => {
             </div>
 
             <div class='mt-2'>
-            <div>${phoneDetails.others.Bluetooth}.</div>
-            <div>${phoneDetails.others.GPS}.</div>
-            <div>${phoneDetails.others.NFC}.</div>
-            <div>${phoneDetails.others.Radio}.</div>
-            <div>${phoneDetails.others.USB}.</div>
-            <div>${phoneDetails.others.WLAN}.</div>
+            <div>${phoneDetails.others?.Bluetooth? phoneDetails.others.Bluetooth: ''}.</div>
+            <div>${phoneDetails.others?.GPS? phoneDetails.others.GPS: ''}.</div>
+            <div>${phoneDetails.others?.NFC? phoneDetails.others.NFC: ''}.</div>
+            <div>${phoneDetails.others?.Radio? phoneDetails.others.Radio: ''}.</div>
+            <div>${phoneDetails.others?.USB? phoneDetails.others.USB: ""}.</div>
+            <div>${phoneDetails.others?.WLAN? phoneDetails.others.WLAN: ""}.</div>
             </div>
         </div>
       </div>
