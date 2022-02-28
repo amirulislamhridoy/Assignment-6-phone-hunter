@@ -58,7 +58,7 @@ const outputDisplay = (phoneDetails) => {
     const output = document.getElementById("output")
     output.innerHTML = `
     <div class="card w-50 mx-auto border-0" style="width: 18rem;">
-      <img src="${phoneDetails.image}" class="card-img-top w-50 mx-auto" alt="...">
+      <img id="img" src="${phoneDetails.image}" class="card-img-top mx-auto" alt="...">
       <div class="card-body d-lg-flex gap-3 align-items-center">
         <div>
             <h4 class="card-title my-0">${phoneDetails.name}</h4>
