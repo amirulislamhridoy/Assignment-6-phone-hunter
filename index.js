@@ -1,3 +1,4 @@
+// search button click
 const load = async () => {
     const inputField = document.getElementById('input-field')
     const inputText = inputField.value 
@@ -7,7 +8,7 @@ const load = async () => {
     const data = await res.json()
     display(data.data)
 }
-
+// fist display
 const display = (phones) => {
     // console.log(phones)
     document.getElementById('row').textContent = ''
@@ -24,29 +25,73 @@ const display = (phones) => {
         }
     }
 }
-
+// function for loop use
 const createElement = (phone) => {
     // console.log(phone)
     const row = document.getElementById('row')
     const div = document.createElement('div')
     div.classList.add('col')
             div.innerHTML = `
-                <div onclick="outputDetails('${phone.slug}')" class="card rounded-3">
+                <div class="card rounded-3">
                   <img src="${phone.image}" class="card-img-top p-5" alt="...">
                   <div class="card-body">
                     <h5 class="card-title">${phone.phone_name}</h5>
                     <p class="card-text">${phone.brand}</p>
-                    <button class="btn btn-primary">Details</button>
+                    <button onclick="outputDetails('${phone.slug}')" class="btn btn-primary">Details</button>
                   </div>
                 </div>
             `
             row.appendChild(div)
 }
-
+// outputDetails
 const outputDetails = (phoneId) => {
     console.log(phoneId)
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`
     fetch(url)
     .then(res => res.json())
-    .then(data => console.log(data.data))
+    .then(data => outputDisplay(data.data))
+}
+
+// last output show
+const outputDisplay = (phoneDetails) => {
+    console.log(phoneDetails)
+    const output = document.getElementById("output")
+    output.innerHTML = `
+    <div class="card w-50 mx-auto border-0" style="width: 18rem;">
+      <img src="${phoneDetails.image}" class="card-img-top w-50 mx-auto" alt="...">
+      <div class="card-body d-flex gap-3">
+        <div>
+            <h4 class="card-title my-0">${phoneDetails.name}</h4>
+            <h5 class="card-title my-0">${phoneDetails.releaseDate ? phoneDetails: 'No release date found'}</h5>
+            <h5 class="card-title my-0">${phoneDetails.brand}</h5>
+
+            <h6 class="mt-3">${phoneDetails.mainFeatures.chipSet}</h6>
+            <h6 class="mt-2">${phoneDetails.mainFeatures.displaySize}</h6>
+            <h6 class="mt-2">${phoneDetails.mainFeatures.memory}</h6>
+            <h6 class="mt-2"></h6>
+        </div>
+
+        <div class='text-end'>
+            <div>
+            <span>${phoneDetails.mainFeatures.sensors[0] ? phoneDetails.mainFeatures.sensors[0]: ''},</span>
+            <span>${phoneDetails.mainFeatures.sensors[1] ? phoneDetails.mainFeatures.sensors[1]: ''},</span>
+            <span>${phoneDetails.mainFeatures.sensors[2] ? phoneDetails.mainFeatures.sensors[2]: ''},</span>
+            <span>${phoneDetails.mainFeatures.sensors[3] ? phoneDetails.mainFeatures.sensors[3]: ''},</span>
+            <span>${phoneDetails.mainFeatures.sensors[4] ? phoneDetails.mainFeatures.sensors[4]: ''},</span>
+            <span>${phoneDetails.mainFeatures.sensors[5] ? phoneDetails.mainFeatures.sensors[5]: ''},</span>
+            <span>${phoneDetails.mainFeatures.sensors[6] ? phoneDetails.mainFeatures.sensors[6]: ''}</span>
+            </div>
+
+            <div class='mt-2'>
+            <div>${phoneDetails.others.Bluetooth}.</div>
+            <div>${phoneDetails.others.GPS}.</div>
+            <div>${phoneDetails.others.NFC}.</div>
+            <div>${phoneDetails.others.Radio}.</div>
+            <div>${phoneDetails.others.USB}.</div>
+            <div>${phoneDetails.others.WLAN}.</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    `
 }
