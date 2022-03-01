@@ -12,36 +12,58 @@ const load = async () => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${inputText}`
     const res = await fetch(url)
     const data = await res.json()
+
     // console.log(data.data.length)
-    if(data.data.length == 0){
-        showHide('error', 'block')
-        showHide('row','none')
-        showHide('spinner','none')
+    document.getElementById('row').textContent = ''
+
+    const thisProducts = data.data
+    const products = thisProducts.slice(0,20)
+    // console.log(products)
+    if(products.length == 0){
+            showHide('error', 'block')
+            showHide('row','none')
+            showHide('spinner','none')
     }
     else{
-        display(data.data)
+        for(const product of products){
+            // console.log(product)
+            showHide('error', 'none')
+            showHide('row','flex')
+            showHide('spinner','none')
+            createElement(product)
+        }
     }
     inputField.value = ''
+    
+    // if(data.data.length == 0){
+    //     showHide('error', 'block')
+    //     showHide('row','none')
+    //     showHide('spinner','none')
+    // }
+    // else{
+    //     display(data.data)
+    // }
 }
 // fist display
-const display = (phones) => {
-    // console.log(phones)
-    showHide('error', 'none')
-    showHide('row','flex')
-    showHide('spinner',"none")
-    document.getElementById('row').textContent = ''
-    if(phones.length > 20){
-        for(let i=0; i<20; i++){
-            const phone = phones[i]
-            createElement(phone)
-        }
-    }
-    else{
-        for(let phone of phones){
-            createElement(phone)
-        }
-    }
-}
+// const display = (phones) => {
+//     // console.log(phones)
+//     showHide('error', 'none')
+//     showHide('row','flex')
+//     showHide('spinner',"none")
+//     document.getElementById('row').textContent = ''
+//     if(phones.length > 20){
+//         for(let i=0; i<20; i++){
+//             const phone = phones[i]
+//             createElement(phone)
+//         }
+//     }
+//     else{
+//         for(let phone of phones){
+//             createElement(phone)
+//         }
+//     }
+// }
+
 // function for loop use
 const createElement = (phone) => {
     // console.log(phone)
@@ -62,7 +84,7 @@ const createElement = (phone) => {
 }
 // outputDetails
 const outputDetails = (phoneId) => {
-    console.log(phoneId)
+    // console.log(phoneId)
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`
     fetch(url)
     .then(res => res.json())
@@ -71,7 +93,7 @@ const outputDetails = (phoneId) => {
 
 // last output show
 const outputDisplay = (phoneDetails) => {
-    console.log(phoneDetails)
+    // console.log(phoneDetails.releaseDate)
     const output = document.getElementById("output")
     output.innerHTML = `
     <div class="card w-50 mx-auto border-0" style="width: 18rem;">
@@ -79,7 +101,7 @@ const outputDisplay = (phoneDetails) => {
       <div class="card-body d-lg-flex gap-3 align-items-center">
         <div>
             <h4 class="card-title my-0">${phoneDetails.name}</h4>
-            <h5 class="card-title my-0">${phoneDetails.releaseDate ? phoneDetails: 'No release date found'}</h5>
+            <h5 class="card-title my-0">${phoneDetails.releaseDate? phoneDetails.releaseDate: 'No release data found.'}</h5>
             <h5 class="card-title my-0">${phoneDetails.brand}</h5>
 
             <h6 class="mt-3">${phoneDetails.mainFeatures.chipSet}</h6>
@@ -114,8 +136,8 @@ const outputDisplay = (phoneDetails) => {
 }
 
 
-
 //show all btn
+
 const showAll = () => {
     const inputField = document.getElementById('input-field')
     const inputText = inputField.value
