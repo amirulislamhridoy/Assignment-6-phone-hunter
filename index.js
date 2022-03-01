@@ -12,9 +12,11 @@ const load = async () => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${inputText}`
     const res = await fetch(url)
     const data = await res.json()
+    // console.log(data.data.length)
     if(data.data.length == 0){
         showHide('error', 'block')
         showHide('row','none')
+        showHide('spinner','none')
     }
     else{
         display(data.data)
@@ -127,7 +129,7 @@ const showAll = () => {
     if(data.data.length == 0){
         showHide('error', 'block')
         showHide('row','none')
-        showHide('spinner','block')
+        showHide('spinner','none')
     }
     else{
         showDisplay(data.data)
