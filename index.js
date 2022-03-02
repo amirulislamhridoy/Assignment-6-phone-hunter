@@ -18,7 +18,7 @@ const load = async () => {
 
     const thisProducts = data.data
     const products = thisProducts.slice(0,20)
-    // console.log(products)
+    // console.log(products.length)
     if(products.length == 0){
             showHide('error', 'block')
             showHide('row','none')
